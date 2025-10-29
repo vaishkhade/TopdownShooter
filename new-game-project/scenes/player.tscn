@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://be8qbmt0fe144"]
+
+[ext_resource type="Script" uid="uid://c3ubxpp10k6x6" path="res://scripts/player.gd" id="1_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://ddmju61vf4g3l" path="res://assets/PNG/Man Blue/manBlue_stand.png" id="2_dqkch"]
+[ext_resource type="Texture2D" uid="uid://bdl1qq6tgl3wk" path="res://assets/PNG/weapon_gun.png" id="3_qlg0r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
+radius = 25.0
+height = 88.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqkch"]
+radius = 19.0
+height = 78.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(24, 45)
+collision_layer = 2
+collision_mask = 17
+wall_min_slide_angle = 0.26005405
+script = ExtResource("1_qhqgy")
+
+[node name="body" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_dqkch")
+
+[node name="gun" type="Sprite2D" parent="body"]
+texture_filter = 1
+position = Vector2(21, 0)
+scale = Vector2(1, 0.5)
+texture = ExtResource("3_qlg0r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_qhqgy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CapsuleShape2D_dqkch")
+
+[node name="cameraremotetransform" type="RemoteTransform2D" parent="."]
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
